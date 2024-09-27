@@ -31,7 +31,7 @@ const PORT = 8082;
 //const DB_URI = "mongodb://127.0.0.1:27017/task-manager"
 //const DB_URI = "mongodb+srv://yuvathegreat1211:vlmwIwjJh6zmNkhA@yuva-cluster.waaqy.mongodb.net/"
 //const DB_URI = process.env.MONGODB_URL;
-console.log("process",process.env.MONGODB_URL);
+//console.log("process",process.env.MONGODB_URL);
 const DB_URI = process.env.MONGODB_URL;
 mongoose.connect(DB_URI,{
     useNewUrlParser: true,

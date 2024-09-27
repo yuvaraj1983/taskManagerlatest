@@ -28,31 +28,31 @@ export const useTaskManager = () => {
     setFile(null);
   };
 
-  const handleSave = async (refreshTasks) => {
-    const formData = new FormData();
-    formData.append("title", taskData.title);
-    formData.append("description", taskData.description);
-    formData.append("deadline", taskData.deadline);
-    formData.append("status", taskData.status);
-    if (file) formData.append("pdf", file);
+  // const handleSave = async (refreshTasks) => {
+  //   const formData = new FormData();
+  //   formData.append("title", taskData.title);
+  //   formData.append("description", taskData.description);
+  //   formData.append("deadline", taskData.deadline);
+  //   formData.append("status", taskData.status);
+  //   if (file) formData.append("pdf", file);
 
-    try {
-      if (isEditing) {
-        await updateTask(taskData._id, {
-          title: taskData.title,
-          description: taskData.description,
-          deadline: taskData.deadline,
-        });
-      } else {
-        await createTask(formData);
-      }
-      await refreshTasks();
+  //   try {
+  //     if (isEditing) {
+  //       await updateTask(taskData._id, {
+  //         title: taskData.title,
+  //         description: taskData.description,
+  //         deadline: taskData.deadline,
+  //       });
+  //     } else {
+  //       await createTask(formData);
+  //     }
+  //     await refreshTasks();
      
-      handleClose();
-    } catch (err) {
-      console.error("Error saving task:", err);
-    }
-  };
+  //     handleClose();
+  //   } catch (err) {
+  //     console.error("Error saving task:", err);
+  //   }
+  // };
 
   const handleFileChange = (event) => {
     if (event.target.files.length) {
@@ -70,7 +70,7 @@ export const useTaskManager = () => {
     handleAddClick,
     handleEditClick,
     handleClose,
-    handleSave,
+    //handleSave,
     handleFileChange,
     setTaskData,
   };

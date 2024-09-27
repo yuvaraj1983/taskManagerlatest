@@ -6,9 +6,11 @@ import TaskModal from "./TaskModal";
 import  LoadingIndicator  from "./LoadingIndicator";
 import { useTasks, useTaskManager } from "../hooks";
 import { deleteTask, markTaskAsDone } from "../service";
+import axios from "axios";
 
 
 const TaskManager = () => {
+    const API_URL = "https://taskmanagerrep.onrender.com/tasks";
     const { tasks, loading, refreshTasks } = useTasks();
     const {
         taskData,
@@ -18,7 +20,7 @@ const TaskManager = () => {
         handleAddClick,
         handleEditClick,
         handleClose,
-        handleSave,
+        //handleSave,
         handleFileChange,
         setTaskData,
       } = useTaskManager();
@@ -92,34 +94,35 @@ const TaskManager = () => {
        
     // }
 
-    // const handleSave = async () => {
-    //     console.log("taskData", taskData)
-    //     const formData = new FormData();
-    //     formData.append("title", taskData.title);
-    //     formData.append("description", taskData.description);
-    //     formData.append("deadline", taskData.deadline);
-    //     if(file) {
-    //         console.log("file exists");
-    //         formData.append("pdf", file);
-    //     } 
-    //     console.log("formData", formData)
-    //     try {
-    //         if(isEditing) {
-    //             await axios.patch(`http://localhost:8082/tasks/${taskData._id}`,{
-    //                 title: taskData.title,
-    //                 description: taskData.description,
-    //                 deadline: taskData.deadline
-    //             });
-    //         } else {
-    //             await axios.post(`http://localhost:8082/tasks`,formData);
-    //         }
-    //         const response = await axios.get("http://localhost:8082/tasks");
-    //         setTasks(response.data);
-    //         handleClose();
-    //     } catch (error) {
-    //         console.error("Error saving task:", error);
-    //     }
-    // }
+    const handleSave = async () => {
+        console.log("taskData", taskData)
+        const formData = new FormData();
+        formData.append("title", taskData.title);
+        formData.append("description", taskData.description);
+        formData.append("deadline", taskData.deadline);
+        if(file) {
+            console.log("file exists");
+            formData.append("pdf", file);
+        } 
+        console.log("formData", formData)
+        try {
+            if(isEditing) {
+                await axios.patch(`${API_URL}/${taskData._id}`,{
+                    title: taskData.title,
+                    description: taskData.description,
+                    deadline: taskData.deadline
+                });
+            } else {
+                //await axios.post(`http://localhost:8082/tasks`,formData);
+                await axios.post(`${API_URL}`,formData);
+            }
+            const response = await axios.get(API_URL);
+            setTaskData(response.data);
+            handleClose();
+        } catch (error) {
+            console.error("Error saving task:", error);
+        }
+    }
 
     // const handleFileChange = (event) => {
     //     event.preventDefault();
